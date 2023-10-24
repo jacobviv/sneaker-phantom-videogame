@@ -23,21 +23,46 @@ const Game = {
 
   start() {
     this.createElements()
-    this.setEventListeners()
     this.gameLoop()
+    this.setEventListeners()
   },
+
+  // setEventListeners() {
+  //   document.onkeydown = event => {
+  //     switch (event.code) {
+  //       case this.keys.LEFT:
+  //         this.player.moveLeft()
+  //         break;
+  //       case this.keys.RIGHT:
+  //         this.player.moveRight()
+  //         break;
+  //       case this.keys.JUMP:
+  //         this.player.jump()
+  //         break;
+  //     }
+  //   }
+
+  //   document.onkeyup = event => {
+  //     switch (event.code) {
+  //       case this.keys.LEFT:
+  //       case this.keys.RIGHT:
+  //         this.player.setNotMoving();
+  //         break;
+  //     }
+  //   }
+  // },
 
   setEventListeners() {
     document.onkeydown = event => {
       switch (event.code) {
         case this.keys.LEFT:
-          this.player.moveLeft()
+          this.player.canMove.left = true
           break;
         case this.keys.RIGHT:
-          this.player.moveRight()
+          this.player.canMove.right = true
           break;
         case this.keys.JUMP:
-          this.player.jump()
+          this.player.canMove.up = true
           break;
       }
     }
@@ -45,11 +70,20 @@ const Game = {
     document.onkeyup = event => {
       switch (event.code) {
         case this.keys.LEFT:
+          this.player.canMove.left = false
+          this.player.setNotMoving()
+          break;
         case this.keys.RIGHT:
-          this.player.setNotMoving();
+          this.player.canMove.right = false
+          this.player.setNotMoving()
+          break;
+        case this.keys.JUMP:
+          this.player.canMove.up = false
+          this.player.setNotMoving()
           break;
       }
     }
+
   },
 
   createElements() {
@@ -68,5 +102,8 @@ const Game = {
 
   moveAll() {
     this.player.move(this.framesIndex)
+    if (this.player.canMove.left) this.player.moveLeft()    ///////////
+    if (this.player.canMove.right) this.player.moveRight()
+    if (this.player.canMove.up) this.player.jump()
   }
 }

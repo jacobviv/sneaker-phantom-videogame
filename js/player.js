@@ -15,7 +15,7 @@ class Player {
     }
 
     this.playerVel = {
-      left: 12,
+      left: 5,
       top: 5,
     }
 
@@ -49,6 +49,12 @@ class Player {
     this.gravity = .2
     this.jumpSpeed = 0
 
+    this.canMove = {
+      right: false,
+      left: false,
+      up: false,
+    }
+
     this.init()
   }
 
@@ -80,6 +86,9 @@ class Player {
     if (this.isJumping) {
       this.playerPos.top += this.jumpSpeed
       this.jumpSpeed += this.gravity
+
+      this.canMove.right = false    ////////////  con esto no se mueve al saltar
+      this.canMove.left = false     ////////////
 
       if (this.playerPos.top >= this.playerPos.base) {
         this.playerPos.top = this.playerPos.base
