@@ -11,12 +11,12 @@ class Player {
     }
 
     this.playerPos = {
-      left: 10,
-      top: gameSize.h - this.playerSize.h
+      left: 50,
+      top: gameSize.h - this.playerSize.h - 50
     }
 
     this.playerVel = {
-      left: 10,
+      left: 20,
       top: 5
     }
 
@@ -29,7 +29,7 @@ class Player {
       backgroundPositionX: 0,
       totalFrames: 3,
       currentFrame: 1,
-      frameSpeed: 4
+      frameSpeed: 6
     }
 
     this.init()
