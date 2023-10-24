@@ -1,73 +1,60 @@
 const Game = {
+  gameScreen: document.querySelector("#game-screen"),
+  gameSize: {
+    w: window.innerWidth,
+    h: window.innerHeight
+  },
 
-    gameScreen: document.querySelector("#game-screen"),
+  player: undefined,
 
-    gameSize: {
-        w: window.innerWidth,
-        h: window.innerHeight
-    },
+  framesIndex: 0,
 
-    framesCounter: 0,
+  keys: { LEFT: 'ArrowLeft', RIGHT: 'ArrowRight' },
 
-    background: undefined,
-    player: undefined,
+  init() {
+    this.setDimensions()
+    this.start()
+  },
 
-    keys: {
-        RIGHT: "ArrowRight",
-        LEFT: "ArrowLeft",
-        JUMP: "ArrowUp"
-    },
+  setDimensions() {
+    this.gameScreen.style.width = `${this.gameSize.w}px`
+    this.gameScreen.style.height = `${this.gameSize.h}px`
+  },
 
-    init() {
-        this.setDimensions()
-        this.setEventListerners()
-        this.start()
-    },
+  start() {
+    this.createElements()
+    this.setEventListeners()
+    this.gameLoop()
+  },
 
-    setDimensions() {
-        this.gameScreen.style.width = `${this.gameSize.w}px`
-        this.gameScreen.style.height = `${this.gameSize.h}px`
-    },
-
-    setEventListerners() {
-        document.addEventListener("keydown", e => {
-            switch (e.code) {
-
-                case this.keys.JUMP:
-                    this.player.jump()
-                    break;
-                case this.keys.LEFT:
-                    this.player.moveLeft()
-                    break;
-                case this.keys.RIGHT:
-                    this.player.moveRight()
-                    break;
-            }
-        })
-    },
-
-    start() {
-        this.createElements()
-        this.gameLoop()
-    },
-
-    gameLoop() {
-        this.moveAll()
-        this.clearAll()
-        this.incrementFrames()
-        window.requestAnimationFrame(() => this.gameLoop())
-    },
-
-    incrementFrames() {
-        this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
-    },
-
-    moveAll() {
-        this.background.move()
-        this.player.move(this.framesCounter)
-    },
-
-    gameOver() {
-        alert('GAME OVER')
+  setEventListeners() {
+    document.onkeydown = event => {
+      switch (event.code) {
+        case this.keys.LEFT:
+          this.player.moveLeft()
+          break;
+        case this.keys.RIGHT:
+          this.player.moveRight()
+          break;
+      }
     }
+  },
+
+  createElements() {
+    this.player = new Player(this.gameScreen, this.gameSize, this.keys)
+  },
+
+  gameLoop() {
+    this.drawAll()
+    this.incrementFrames()
+    window.requestAnimationFrame(() => this.gameLoop())
+  },
+
+  incrementFrames() {
+    this.framesIndex > 5000 ? this.framesIndex = 0 : this.framesIndex++
+  },
+
+  drawAll() {
+    this.player.move(this.framesIndex)
+  }
 }
