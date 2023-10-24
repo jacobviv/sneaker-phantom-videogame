@@ -1,42 +1,52 @@
 class Player {
-
   constructor(gameScreen, gameSize) {
-
     this.gameScreen = gameScreen
     this.gameSize = gameSize
 
     this.playerSize = {
-      w: 100,
-      h: 100
+      w: 75,
+      h: 75,
     }
 
     this.playerPos = {
       left: 50,
-      top: gameSize.h - this.playerSize.h - 50
+      top: gameSize.h - this.playerSize.h - 50,
     }
 
     this.playerVel = {
-      left: 20,
-      top: 5
+      left: 12,
+      top: 5,
     }
 
-    this.playerBackgroundPos = {
-      x: 0,
-      y: 0
+    this.isMoving = false
+    this.currentDirection = 'RIGHT'
+    this.idleFrame = this.currentDirection === 'LEFT' ? 8 : 0
+
+    this.spriteFrames = {
+      LEFT: [
+        { x: 300, y: 0 },
+        { x: 375, y: 0 },
+        { x: 450, y: 0 },
+        { x: 525, y: 0 }
+      ],
+      RIGHT: [
+        { x: 0, y: 0 },
+        { x: 75, y: 0 },
+        { x: 150, y: 0 },
+        { x: 225, y: 0 }
+      ]
     }
 
     this.playerSprite = {
       backgroundPositionX: 0,
-      totalFrames: 3,
-      currentFrame: 1,
-      frameSpeed: 6
+      currentFrame: this.idleFrame,
+      frameSpeed: 8,
     }
 
     this.init()
   }
 
   init() {
-
     this.playerElement = document.createElement('div')
 
     this.playerElement.style.position = "absolute"
@@ -45,8 +55,8 @@ class Player {
     this.playerElement.style.left = `${this.playerPos.left}px`
     this.playerElement.style.top = `${this.playerPos.top}px`
 
-    this.playerElement.style.backgroundImage = `url(./img/player.png)`
-    this.playerElement.style.backgroundSize = `300px 100px`
+    this.playerElement.style.backgroundImage = `url(./img/phantom.png)`
+    this.playerElement.style.backgroundSize = `600px 75px`
 
     this.playerElement.style.overflow = "hidden"
     this.playerElement.style.backgroundRepeat = "no-repeat"
@@ -56,33 +66,42 @@ class Player {
   }
 
   move(framesIndex) {
-    this.animateSprite(framesIndex)
+    if (this.isMoving) {
+      this.animateSprite(framesIndex)
+    }
     this.updatePosition()
-  }
-
-  animateSprite(framesIndex) {
-
-    if (framesIndex % this.playerSprite.frameSpeed == 0) {
-      this.playerSprite.currentFrame++
-    }
-    if (this.playerSprite.currentFrame >= this.playerSprite.totalFrames) {
-      this.playerSprite.currentFrame = 0
-    }
-
-    this.playerSprite.backgroundPositionX = -this.playerSize.w * this.playerSprite.currentFrame
-
-    this.updateSprite()
   }
 
   moveLeft() {
     this.playerPos.left -= this.playerVel.left
+    this.isMoving = true
+    this.currentDirection = 'LEFT'
   }
 
   moveRight() {
     this.playerPos.left += this.playerVel.left
+    this.isMoving = true
+    this.currentDirection = 'RIGHT'
+  }
+
+  setNotMoving() {
+    this.isMoving = false
+    this.playerSprite.currentFrame = this.currentDirection === 'LEFT' ? 3 : 0; // Frame 3 para la izquierda, 0 para la derecha
+    this.updateSprite() // Añadir esto para asegurarse de que el sprite se actualice inmediatamente
+  }
+
+  animateSprite(framesIndex) {
+    if (framesIndex % this.playerSprite.frameSpeed == 0) {
+      const currentFrames = this.spriteFrames[this.currentDirection]
+      this.playerSprite.currentFrame = (this.playerSprite.currentFrame + 1) % currentFrames.length
+    }
+
+    this.updateSprite()
   }
 
   updateSprite() {
+    const currentFrame = this.spriteFrames[this.currentDirection][this.playerSprite.currentFrame]
+    this.playerSprite.backgroundPositionX = -currentFrame.x
     this.playerElement.style.backgroundPositionX = `${this.playerSprite.backgroundPositionX}px`
   }
 

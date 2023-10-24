@@ -38,6 +38,15 @@ const Game = {
           break;
       }
     }
+
+    document.onkeyup = event => {
+      switch (event.code) {
+        case this.keys.LEFT:
+        case this.keys.RIGHT:
+          this.player.setNotMoving();
+          break;
+      }
+    }
   },
 
   createElements() {
@@ -45,7 +54,7 @@ const Game = {
   },
 
   gameLoop() {
-    this.drawAll()
+    this.moveAll()
     this.incrementFrames()
     window.requestAnimationFrame(() => this.gameLoop())
   },
@@ -54,7 +63,7 @@ const Game = {
     this.framesIndex > 5000 ? this.framesIndex = 0 : this.framesIndex++
   },
 
-  drawAll() {
+  moveAll() {
     this.player.move(this.framesIndex)
   }
 }
