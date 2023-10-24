@@ -9,7 +9,7 @@ const Game = {
 
   framesIndex: 0,
 
-  keys: { LEFT: 'ArrowLeft', RIGHT: 'ArrowRight' },
+  keys: { LEFT: 'ArrowLeft', RIGHT: 'ArrowRight', JUMP: 'Space' },
 
   init() {
     this.setDimensions()
@@ -35,6 +35,9 @@ const Game = {
           break;
         case this.keys.RIGHT:
           this.player.moveRight()
+          break;
+        case this.keys.JUMP:
+          this.player.jump()
           break;
       }
     }
