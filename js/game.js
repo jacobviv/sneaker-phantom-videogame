@@ -11,6 +11,7 @@ const Game = {
 
     background: undefined,
     player: undefined,
+
     keys: {
         RIGHT: "ArrowRight",
         LEFT: "ArrowLeft",
@@ -35,8 +36,11 @@ const Game = {
                 case this.keys.JUMP:
                     this.player.jump()
                     break;
+                case this.keys.LEFT:
+                    this.player.moveLeft()
+                    break;
                 case this.keys.RIGHT:
-                    this.player.move()
+                    this.player.moveRight()
                     break;
             }
         })
@@ -48,21 +52,22 @@ const Game = {
     },
 
     gameLoop() {
-        this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
-
         this.moveAll()
         this.clearAll()
-
+        this.incrementFrames()
         window.requestAnimationFrame(() => this.gameLoop())
+    },
+
+    incrementFrames() {
+        this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
     },
 
     moveAll() {
         this.background.move()
-        this.player.move()
+        this.player.move(this.framesCounter)
     },
 
     gameOver() {
         alert('GAME OVER')
     }
-
 }
