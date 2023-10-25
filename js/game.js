@@ -1,11 +1,19 @@
 const Game = {
+  name: 'Sneaker Phantom',
+  description: 'Arcade action game',
+  platform: 'Web browser',
+  mode: 'Single player',
+  version: '1.0.0',
+  license: undefined,
+  author: 'Rubén Briongos',
+
   gameScreen: document.querySelector("#game-screen"),
   gameSize: {
     w: window.innerWidth,
     h: window.innerHeight
   },
 
-  player: undefined,
+  player: null,
 
   framesIndex: 0,
 

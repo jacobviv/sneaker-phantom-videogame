@@ -41,7 +41,7 @@ class Player {
     this.playerSprite = {
       backgroundPositionX: 0,
       currentFrame: this.idleFrame,
-      frameSpeed: 8,
+      frameSpeed: 7,
     }
 
     this.isJumping = false
