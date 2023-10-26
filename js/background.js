@@ -1,6 +1,6 @@
 class Background {
 
-    constructor(gameScreen, gameSize) {
+    constructor(gameScreen, gameSize, player) {
 
         this.gameScreen = gameScreen
         this.gameSize = gameSize
@@ -23,6 +23,8 @@ class Background {
         this.backgroundVel = {
             left: .2
         }
+
+        this.player = player
 
         this.init()
     }

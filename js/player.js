@@ -8,10 +8,12 @@ class Player {
       h: 75,
     }
 
+    this.margin = 50
+
     this.playerPos = {
       left: 50,
-      top: gameSize.h - this.playerSize.h - 50,
-      base: gameSize.h - this.playerSize.h - 50,
+      top: gameSize.h - this.playerSize.h - this.margin,
+      base: gameSize.h - this.playerSize.h - this.margin,
     }
 
     this.playerVel = {
@@ -98,13 +100,17 @@ class Player {
   }
 
   moveLeft() {
-    this.playerPos.left -= this.playerVel.left
-    this.isMoving = true
-    this.currentDirection = 'LEFT'
+    if (this.playerPos.left > this.margin) {
+      this.playerPos.left -= this.playerVel.left
+      this.isMoving = true
+      this.currentDirection = 'LEFT'
+    }
   }
 
   moveRight() {
-    this.playerPos.left += this.playerVel.left
+    if (this.playerPos.left + this.playerSize.w < this.gameSize.w / 2) {
+      this.playerPos.left += this.playerVel.left
+    } else { this.playerPos.left + this.playerSize.w == this.gameSize.w / 2 }
     this.isMoving = true
     this.currentDirection = 'RIGHT'
   }
