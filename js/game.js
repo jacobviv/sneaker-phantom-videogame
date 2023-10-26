@@ -14,6 +14,7 @@ const Game = {
   },
 
   player: null,
+  background: undefined,
 
   framesIndex: 0,
 
@@ -95,6 +96,7 @@ const Game = {
   },
 
   createElements() {
+    this.background = new Background(this.gameScreen, this.gameSize)
     this.player = new Player(this.gameScreen, this.gameSize, this.keys)
   },
 
@@ -110,6 +112,7 @@ const Game = {
 
   moveAll() {
     this.player.move(this.framesIndex)
+    this.background.move()
     if (this.player.canMove.left) this.player.moveLeft()    ///////////
     if (this.player.canMove.right) this.player.moveRight()
     if (this.player.canMove.up) this.player.jump()
