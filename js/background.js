@@ -56,9 +56,17 @@ class Background {
         if (this.backgroundPosition1.left <= -this.gameSize.w) {
             this.restartPosition()
         }
-        this.backgroundPosition1.left -= this.backgroundVel.left
-        this.backgroundPosition2.left -= this.backgroundVel.left
-        this.updatePosition()
+
+        if (
+            this.player.playerPos.left + this.player.playerSize.w >= this.gameSize.w / 2
+            && this.player.isMoving
+        ) {
+            this.backgroundPosition1.left -= this.player.playerVel.left
+            this.backgroundPosition2.left -= this.player.playerVel.left
+            this.updatePosition()
+        }
+        // this.backgroundPosition1.left -= this.backgroundVel.left
+        // this.backgroundPosition2.left -= this.backgroundVel.left
     }
 
     restartPosition() {

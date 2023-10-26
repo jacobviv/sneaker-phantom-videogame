@@ -98,6 +98,7 @@ const Game = {
   createElements() {
     this.background = new Background(this.gameScreen, this.gameSize, this.player)
     this.player = new Player(this.gameScreen, this.gameSize, this.keys)
+    this.background.player = this.player
   },
 
   gameLoop() {
