@@ -8,7 +8,7 @@ class Player {
       h: 75,
     }
 
-    this.margin = 50
+    this.margin = 75
 
     this.playerPos = {
       left: 50,
